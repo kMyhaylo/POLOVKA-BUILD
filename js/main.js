@@ -115,7 +115,7 @@
   }
 
   /* =========================================================
-     Room cards: in-card photo carousel (drag + wheel + arrows + dots)
+     Room cards: in-card photo carousel (drag + arrows + dots)
   ========================================================= */
   var rooms = []; // { images: [src...] } per room, built below
 
@@ -177,14 +177,6 @@
     }
     window.addEventListener('pointerup', endDrag);
     window.addEventListener('pointercancel', endDrag);
-
-    /* Vertical wheel -> horizontal scroll */
-    scroller.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        scroller.scrollLeft += e.deltaY;
-        e.preventDefault();
-      }
-    }, { passive: false });
 
     /* Arrow buttons step one slide at a time */
     if (prevBtn) prevBtn.addEventListener('click', function () {
