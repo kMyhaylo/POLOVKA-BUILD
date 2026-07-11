@@ -247,28 +247,12 @@
   });
 
   /* =========================================================
-     Video card: silent autoplay loop, only while on screen,
-     plus an expand button that opens a distraction-free modal
+     Video cards: each plays silently on loop only while on
+     screen; the expand button opens a distraction-free modal
   ========================================================= */
-  var galleryVideo = document.getElementById('galleryVideo');
   var videoModal = document.getElementById('videoModal');
   var videoModalPlayer = document.getElementById('videoModalPlayer');
   var videoModalClose = document.getElementById('videoModalClose');
-
-  if (galleryVideo && 'IntersectionObserver' in window) {
-    var videoObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          galleryVideo.play().catch(function () {});
-        } else {
-          galleryVideo.pause();
-        }
-      });
-    }, { threshold: 0.5 });
-    videoObserver.observe(galleryVideo);
-  } else if (galleryVideo) {
-    galleryVideo.play().catch(function () {});
-  }
 
   function openVideoModal(src, poster) {
     videoModalPlayer.src = src;
@@ -287,11 +271,33 @@
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.room-card__expand').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openVideoModal(galleryVideo.currentSrc || galleryVideo.src, galleryVideo.poster);
-    });
+  document.querySelectorAll('.room-card--video').forEach(function (card) {
+    var video = card.querySelector('.room-card__video');
+    var expandBtn = card.querySelector('.room-card__expand');
+    if (!video) return;
+
+    if ('IntersectionObserver' in window) {
+      var videoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.5 });
+      videoObserver.observe(video);
+    } else {
+      video.play().catch(function () {});
+    }
+
+    if (expandBtn) {
+      expandBtn.addEventListener('click', function () {
+        openVideoModal(video.currentSrc || video.src, video.poster);
+      });
+    }
   });
+
   if (videoModalClose) videoModalClose.addEventListener('click', closeVideoModal);
   if (videoModal) {
     videoModal.addEventListener('click', function (e) {
