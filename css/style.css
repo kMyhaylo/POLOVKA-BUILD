@@ -503,7 +503,19 @@ button { font-family: inherit; }
 .disclaimer__text strong { color: var(--accent); }
 
 /* ---------------- Gallery: room cards ---------------- */
-.room-grid {
+.gallery-subhead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 20px;
+}
+.gallery-subhead .icon { color: var(--accent); flex-shrink: 0; }
+.gallery-subhead--video { margin-top: 56px; }
+
+.room-grid, .video-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
@@ -669,17 +681,14 @@ button { font-family: inherit; }
 .room-card__mute-badge svg { width: 14px; height: 14px; }
 
 @media (min-width: 560px) {
-  .room-grid { grid-template-columns: repeat(2, 1fr); }
+  .room-grid, .video-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 860px) {
-  .room-grid { grid-template-columns: repeat(3, 1fr); }
+  .video-grid { grid-template-columns: repeat(3, 1fr); }
   .room-card__title { font-size: 16px; }
 }
 @media (min-width: 1024px) {
   .room-grid { grid-template-columns: repeat(4, 1fr); }
-}
-@media (min-width: 1280px) {
-  .room-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* Lightbox */
